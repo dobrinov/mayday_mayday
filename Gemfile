@@ -5,6 +5,7 @@ gem 'font-awesome-sass', '~> 4.4.0'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'pg'
+gem 'pry'
 gem 'rails', '4.2.5'
 gem "slim-rails"
 gem 'sass-rails', '~> 5.0'
