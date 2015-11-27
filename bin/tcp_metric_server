@@ -1,0 +1,99 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'json'
+require 'socket'
+require 'active_record'
+require "activerecord-import"
+
+require_relative '../app/models/measurement'
+
+RAILS_ENV = ENV['RAILS_ENV'] || 'development'
+ActiveRecord::Base.establish_connection(YAML.load_file('config/database.yml')[RAILS_ENV])
+
+#################
+# SINGLE INSERT #
+#################
+
+# server = TCPServer.new 6666
+
+# p "Starting server ..."
+
+# messages_processed_interval = 0
+
+# # Counter
+# Thread.new do
+#   loop do
+#     p "#{messages_processed_interval} events/s"
+#     messages_processed_interval = 0
+#     sleep 1
+#   end
+# end
+
+# loop {
+#   Thread.start(server.accept) do |client|
+
+#     while request = client.gets
+#       begin
+#         event = JSON.parse(request)
+#         event['created_at'] = Time.at(event.delete('timestamp'))
+#         Measurement.create!(event)
+#         messages_processed_interval += 1
+#       rescue => e
+#         puts e.message
+#       end
+#     end
+
+#     client.close
+#   end
+# }
+
+# p "Stopping server ..."
+
+###############
+# BULK INSERT #
+###############
+
+server = TCPServer.new 6666
+
+p "Starting server ..."
+
+messages_processed_interval = 0
+BULK_IMPORT_PACKAGE = 300
+columns = nil
+values = []
+
+# Counter
+Thread.new do
+  loop do
+    p "#{messages_processed_interval} events/s"
+    messages_processed_interval = 0
+    sleep 1
+  end
+end
+
+loop {
+  Thread.start(server.accept) do |client|
+
+    while request = client.gets
+      begin
+        event = JSON.parse(request)
+        event['created_at'] = Time.at(event.delete('timestamp'))
+
+        columns ||= event.keys
+        values.push(event.values)
+
+        if values.count >= BULK_IMPORT_PACKAGE
+          messages_processed_interval += BULK_IMPORT_PACKAGE
+          Measurement.import(columns, values)
+        end
+      rescue => e
+        puts e.message
+      end
+    end
+
+    client.close
+  end
+}
+
+p "Stopping server ..."
