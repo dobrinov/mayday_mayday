@@ -1,0 +1,18 @@
+table.table
+  thead
+    tr
+      th Layer
+      th Metric
+      th Value
+      th Host
+      th Valid until
+      th Created at
+  tbody
+    - @measurements.each do |measurement|
+      tr
+        td = measurement.layer
+        td = measurement.name
+        td = measurement.value
+        td = measurement.host
+        td = measurement.valid_until
+        td = measurement.created_at

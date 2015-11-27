@@ -1,6 +1,15 @@
 table.table
   thead
     tr
-      th Layer
       th Metric
+      th &nbsp;
   tbody
+    - if @metrics.any?
+      - @metrics.each do |metric|
+        tr
+          td = "#{metric.layer}.#{metric.name}"
+          td = link_to 'measurements', metric_measurements_path(layer: metric.layer, name: metric.name), class: 'btn btn-xs btn-default'
+
+    - else
+      tr
+        td colspan="3" There are no recorded metrics.

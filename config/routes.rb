@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-  resources :metrics do
-    resources :measurements
-  end
+
+  get 'metrics', to: 'metrics#index'
+  get 'metrics/:layer.:name/measurements', to: 'measurements#index',
+                                         as: 'metric_measurements',
+                                         constraints: {
+                                           layer: /[a-z_]+/,
+                                           name:  /(([a-z_]+)\.?)+/
+                                         }
 
   # resources :thresholds
   # resources :hosts
