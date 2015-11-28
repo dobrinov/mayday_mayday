@@ -1,17 +1,13 @@
 br
 
-table.table
-  thead
-    tr
-      th Metric
-      th &nbsp;
-  tbody
+ul.nav.nav-tabs
+  - ['physical', 'service', 'application', 'business'].each do |layer|
+    li class="#{'active' if params[:layer] == layer}" = link_to layer.capitalize, metrics_layer_path(layer: layer)
+
+br
+
+.row
+  .col-xs-3
     - if @metrics.any?
       - @metrics.each do |metric|
-        tr
-          td = "#{metric.layer}.#{metric.name}"
-          td = link_to 'measurements', metric_measurements_path(layer: metric.layer, name: metric.name), class: 'btn btn-xs btn-default'
-
-    - else
-      tr
-        td colspan="3" There are no recorded metrics.
+        = link_to metric.name, metric_measurements_path(layer: metric.layer, name: metric.name), class: "btn  btn-block #{params[:name] == metric.name ? 'btn-primary' : 'btn-default'}"

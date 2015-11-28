@@ -1,20 +1,33 @@
 br
 
-table.table
-  thead
-    tr
-      th Layer
-      th Metric
-      th Value
-      th Host
-      th Valid until
-      th Created at
-  tbody
-    - @measurements.each do |measurement|
-      tr
-        td = measurement.layer
-        td = measurement.name
-        td = measurement.value
-        td = measurement.host
-        td = measurement.valid_until
-        td = measurement.created_at
+ul.nav.nav-tabs
+  - ['physical', 'service', 'application', 'business'].each do |layer|
+    li class="#{'active' if params[:layer] == layer}" = link_to layer.capitalize, metrics_layer_path(layer: layer)
+
+br
+
+.row
+  .col-xs-3
+    - if @metrics.any?
+      - @metrics.each do |metric|
+        = link_to metric.name, metric_measurements_path(layer: metric.layer, name: metric.name), class: "btn  btn-block #{params[:name] == metric.name ? 'btn-primary' : 'btn-default'}"
+
+  .col-xs-9
+    table.table
+      thead
+        tr
+          th Layer
+          th Metric
+          th Value
+          th Host
+          th Valid until
+          th Created at
+      tbody
+        - @measurements.each do |measurement|
+          tr
+            td = measurement.layer
+            td = measurement.name
+            td = measurement.value
+            td = measurement.host
+            td = measurement.valid_until
+            td = measurement.created_at
