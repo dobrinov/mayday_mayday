@@ -7,7 +7,7 @@ require_relative '../app/models/measurement'
 
 class TcpMetricServer
 
-  BULK_IMPORT_PACKAGE_SIZE = 300
+  BULK_IMPORT_PACKAGE_SIZE = 1
 
   def initialize(port)
     @server = TCPServer.new(port)
@@ -49,7 +49,14 @@ class TcpMetricServer
     begin
       measurement = parse_payload(payload)
 
-      @measurements_batch.push(measurement.values)
+      @measurements_batch.push([
+        measurement['layer'],
+        measurement['name'],
+        measurement['value'],
+        measurement['host'],
+        measurement['valid_until'],
+        measurement['created_at']
+      ])
 
       if @measurements_batch.count >= batch_size
         @measurements_processed_interval += batch_size
@@ -64,12 +71,19 @@ class TcpMetricServer
 
   def parse_payload(payload)
     measurement = JSON.parse(payload)
-    measurement['created_at'] = Time.at(measurement.delete('timestamp'))
+
+    if measurement['ttl'].present?
+      measurement['valid_until'] = Time.at(measurement['timestamp'] + measurement['ttl'])
+    else
+      measurement['valid_until'] = nil
+    end
+
+    measurement['created_at']  = Time.at(measurement.delete('timestamp'))
 
     measurement
   end
 
   def measurement_column_names
-    @_measurement_column_names ||= Measurement.attribute_names - %w{id created_at updated_at}
+    ["layer", "name", "value", "host", "valid_until", "created_at"]
   end
 end
