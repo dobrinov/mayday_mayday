@@ -31,3 +31,12 @@ br
             td = measurement.host
             td = measurement.valid_until
             td = measurement.created_at
+
+    nav
+      ul.pagination
+        li = link_to '#' do
+          span &laquo;
+        - 1.upto(@measurements.total_pages) do |page|
+          li class="#{'active' if page == @measurements.current_page}" = link_to page, metric_measurements_path(layer: params[:layer], name: params[:name], page: page)
+        li = link_to '#' do
+          span &raquo;
