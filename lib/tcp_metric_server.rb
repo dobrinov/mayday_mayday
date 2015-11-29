@@ -1,7 +1,7 @@
 require 'yaml'
 require 'json'
 require 'socket'
-require "activerecord-import"
+require 'activerecord-import'
 
 require_relative '../app/models/measurement'
 
