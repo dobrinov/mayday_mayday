@@ -1,5 +1,5 @@
 # Mayday, Mayday!
-Simple event processing and alerting system written in Ruby.
+Simple monitoring and alerting system written in Ruby.
 
 ## Why I decided to implement yet another monitoring system?
 I have been working with monitoring systems for the last couple of months. During this time I had to evaluate a couple of monitoring tools/systems and understand very good what are the business requirements for such a thing. The conclusions to which I came are:
