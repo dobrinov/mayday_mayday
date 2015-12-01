@@ -1,6 +1,15 @@
 # Mayday, Mayday!
 Simple monitoring and alerting system written in Ruby.
 
+Table of contents:
+1. Why I decided to implement yet another monitoring system?
+2. My vision of a monitoring system
+3. Architecture
+4. Installation
+5. Benchmarks
+6. Roadmap
+7. Contributing
+
 ## Why I decided to implement yet another monitoring system?
 I have been working with monitoring systems for the last couple of months. During this time I had to evaluate a couple of monitoring tools/systems and understand very good what are the business requirements for such a thing. The conclusions to which I came are:
 * Implementing a monitoring system is hard.
@@ -26,7 +35,7 @@ The software of choice for the monitoring system on which I worked was [Riemann]
 
 The database of choice which I was using with [Riemann](http://riemann.io/) was [InfluxDB](https://influxdb.com/) - quite young series database.
 
-## The monitoring system of the future
+## My vision of a monitoring system
 
 
 ## Architecture
