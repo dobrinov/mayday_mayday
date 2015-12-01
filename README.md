@@ -36,13 +36,13 @@ CLIENT >>> RUBY >>> POSTGRES >>> VISUALISATION & ALERTING
 CLIENT >>>
 ```
 
+I used Rails for the prototype in order to simplify the setup. Later this could be reduced to Sinatra app for better performance.
+
 ## Installation
+TODO
 
 ## Benchmarks
+TODO
 
 ## Roadmap
-
-!!!
-
-All alerting logic on one place!
-All data on one place!
+TODO
