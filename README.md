@@ -1,6 +1,4 @@
 # Mayday, Mayday!
-
-## Description
 Simple event processing and alerting system written in Ruby.
 
 ## Why I decided to implement yet another monitoring system?
@@ -24,6 +22,7 @@ The software of choice for the monitoring system on which I worked was [Riemann]
 * flexible - lack of framework. If you need a scallable configuration you will have to implement one by yourself. If you do not take this in mind big configuration can get messy.
 * no naming conventions for the services - There are really no rules for naming services. 
 * event states are often not final - There are a lot of [Riemann](http://riemann.io/) clients which define event states which are often not those which we need. Because of this those events have to be processed additionally and those states to be changed.
+* alerting logic spread between Riemann and clients - I think that in order to be maintainable it should be on one place and this place should be located after the data is persisted.
 
 The database of choice which I was using with [Riemann](http://riemann.io/) was [InfluxDB](https://influxdb.com/) - quite young series database.
 
