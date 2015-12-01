@@ -1,8 +1,7 @@
 # Mayday, Mayday!
 Simple monitoring and alerting system written in Ruby.
 
-Table of contents:
-
+##Table of contents:
 1. Why I decided to implement yet another monitoring system?
 2. My vision of a monitoring system
 3. Architecture
