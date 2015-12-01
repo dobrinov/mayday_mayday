@@ -13,6 +13,45 @@ br
         = link_to metric.name, metric_measurements_path(layer: metric.layer, name: metric.name), class: "btn  btn-block #{params[:name] == metric.name ? 'btn-primary' : 'btn-default'}"
 
   .col-xs-9
+    .chart#chart style="width:100%; height:400px;"
+    javascript:
+      var chart;
+
+      function loadData() {
+        $.ajax({
+          url: "#{metric_measurements_path(layer: params[:layer], name: params[:name], chart: true, format: :json)}",
+          success: function(series) {
+            for(var i=0; i<series.length; i++){
+              chart.addSeries({
+                name: series[i].name,
+                data: series[i].data
+              });
+            }
+          },
+          cache: false
+        });
+      }
+
+      $(function() {
+        chart = new Highcharts.Chart({
+          chart: {
+            renderTo: 'chart'
+          },
+          title: {
+            text: "#{params[:name]}",
+          },
+          xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150,
+            maxZoom: 20 * 1000
+          }
+        });
+
+        loadData();
+      });
+
+    br
+
     table.table
       thead
         tr
@@ -34,9 +73,15 @@ br
 
     nav
       ul.pagination
-        li = link_to '#' do
-          span &laquo;
+        - if @measurements.previous_page
+          li
+            = link_to metric_measurements_path(layer: params[:layer], name: params[:name], page: @measurements.previous_page) do
+              span &laquo;
+
         - 1.upto(@measurements.total_pages) do |page|
           li class="#{'active' if page == @measurements.current_page}" = link_to page, metric_measurements_path(layer: params[:layer], name: params[:name], page: page)
-        li = link_to '#' do
-          span &raquo;
+
+        - if @measurements.next_page
+          li
+            = link_to metric_measurements_path(layer: params[:layer], name: params[:name], page: @measurements.next_page) do
+              span &raquo;

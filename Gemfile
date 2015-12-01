@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'activerecord-import', :require => false
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'font-awesome-sass', '~> 4.4.0'
+gem "highcharts-rails"
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'pg'
