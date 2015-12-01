@@ -30,6 +30,11 @@ The database of choice which I was using with [Riemann](http://riemann.io/) was 
 
 
 ## Architecture
+```
+CLIENT >>>
+CLIENT >>> RUBY >>> POSTGRES >>> VISUALISATION & ALERTING
+CLIENT >>>
+```
 
 ## Installation
 
