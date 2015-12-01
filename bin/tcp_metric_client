@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require 'json'
+
+hosts = [
+  'one.example.com',
+  'two.example.com',
+  'three.example.com',
+  'four.example.com',
+  'five.example.com'
+]
+
+metrics = [
+  # {layer: 'physical',    name: 'cpu.overal'},
+  # {layer: 'physical',    name: 'ram.overal'},
+  {layer: 'service',     name: 'postgres.running'},
+  # {layer: 'service',     name: 'redis.running'},
+  # {layer: 'application', name: 'request.response_time'},
+  # {layer: 'application', name: 'database.response_time'},
+  # {layer: 'business',    name: 'user.sign_in'},
+  # {layer: 'business',    name: 'user.sign_up'}
+]
+
+
+socket = TCPSocket.new 'localhost', 6666
+
+last_value = 0
+
+loop do
+  new_value = last_value + rand(-5..5)
+  last_value = new_value
+
+  metric = metrics.sample
+  event = {
+    host:      hosts.sample,
+    layer:     metric[:layer],
+    name:      metric[:name],
+    value:     new_value,
+    ttl:       60,
+    timestamp: Time.now.to_i
+  }.to_json
+
+  socket.puts event
+
+  sleep 1
+end
+
+socket.close
