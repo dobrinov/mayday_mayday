@@ -14,4 +14,10 @@ Rails.application.routes.draw do
                                              layer: /[a-z_]+/,
                                              name:  /(([a-z_]+)\.?)+/
                                            }
+
+  namespace :alerting do
+    resources :thresholds
+
+    get 'incidents', to: 'incidents#index'
+  end
 end
