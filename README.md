@@ -40,9 +40,9 @@ The database of choice which I was using with [Riemann](http://riemann.io/) was 
 
 ## Architecture
 ```
-CLIENT >>>
-CLIENT >>> RUBY >>> POSTGRES >>> VISUALISATION & ALERTING
-CLIENT >>>
+CLIENT >>>                   >>> VISUALISATION
+CLIENT >>> RUBY >>> POSTGRES |
+CLIENT >>>                   >>> ALERTING
 ```
 
 I used Rails for the prototype in order to simplify the setup. Later this could be reduced to Sinatra app for better performance.
@@ -57,4 +57,4 @@ TODO
 TODO
 
 ## Contributing
-If you decide that you want to take in the development of such a system, you can proceed in the usual way - create a PR.
+If you want to make an impact and contribute to the project, do it the usuall way - create a PR.
