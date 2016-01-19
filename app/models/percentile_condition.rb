@@ -1,0 +1,2 @@
+class PercentileCondition < Condition
+end

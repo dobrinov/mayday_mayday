@@ -1,0 +1,9 @@
+= form_for [:alerting, policy] do |f|
+  .form-group
+    = f.text_field :name, placeholder: 'Name', class: 'form-control'
+
+  .form-group
+    = f.text_field :description, placeholder: 'Description', class: 'form-control'
+
+  .form-group
+    = f.submit class: 'btn btn-primary'

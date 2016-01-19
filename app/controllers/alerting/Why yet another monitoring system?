@@ -1,0 +1,2 @@
+Why yet another monitoring system?
+For a couple of months I worked on a project where I had to implement a monitoring solution. In order to do this I evaluated few paid (NewRelic) and open source (Prometheus, Riemann) tools. During this I was able to learn about monitoring and for the business requirements of the companies which need it.

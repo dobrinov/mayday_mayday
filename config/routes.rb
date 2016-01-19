@@ -16,7 +16,12 @@ Rails.application.routes.draw do
                                            }
 
   namespace :alerting do
-    resources :thresholds
+    resources :policies do
+      resources :conditions
+
+      delete 'value_condition/:id', to: 'conditions#destroy',
+                                    as: 'value_condition'
+    end
 
     get 'incidents', to: 'incidents#index'
   end

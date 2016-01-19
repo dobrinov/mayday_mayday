@@ -1,1 +1,30 @@
 h1 Incidents
+
+- if @incidents.any?
+  table.table
+    thead
+      tr
+        th Violated policy
+        th Violated conditions
+        th Violated at
+        th Last violated at
+        th Resolved
+    tbody
+      - @incidents.each do |incident|
+        tr
+          td = incident.policy.name
+          td
+            - incident.policy.conditions.select { |c| c.violated? }.each do |condition|
+              div
+                = "#{condition.layer}.#{condition.name}"
+                | &nbsp;
+                = condition.inverted ? '<' : '>'
+                | &nbsp;
+                = condition.value
+
+          td = incident.created_at
+          td = incident.last_available_at
+          td = incident.resolved?
+
+- else
+  p Currently there are no incidents.

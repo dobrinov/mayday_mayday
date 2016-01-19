@@ -1,0 +1,40 @@
+h1 Policies
+
+.row
+  - if @policies.any?
+    - @policies.each do |policy|
+      .col-xs-12
+        .panel.panel-default
+          .panel-heading
+             h3.panel-title = policy.name
+             span = policy.description
+          .panel-body
+            - if policy.conditions.any?
+              ul.list-group
+                - policy.conditions.each do |condition|
+                  li.list-group-item
+                    .row
+                      .col-sm-10 = description_for_condition(condition)
+                      .col-sm-2 = button_to 'Delete', [:alerting, policy, condition], method: :delete, class: 'btn btn-danger btn-xs'
+            - else
+              p There are no conditions for this policy.
+          .panel-footer
+            .btn-group
+              button.btn.btn-xs.btn-default.dropdown-toggle data-toggle="dropdown"
+                | New condition
+                | &nbsp;
+                span.caret
+              ul.dropdown-menu
+                - Condition::TYPES.each do |type|
+                  li = link_to "#{name_for_condition_type(type)} condition", new_alerting_policy_condition_path(policy, type: type)
+
+            = link_to 'Edit', edit_alerting_policy_path(policy), class: 'btn btn-default btn-xs'
+            | &nbsp;
+            = button_to 'Delete', [:alerting, policy], method: :delete, class: 'btn btn-danger btn-xs'
+
+  - else
+    .col-xs-12
+      .alert.alert-info  There are no policies.
+
+  .col-xs-12
+    = link_to 'New policy', new_alerting_policy_path, class: 'btn btn-primary'

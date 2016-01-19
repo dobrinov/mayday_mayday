@@ -1,0 +1,24 @@
+= form_for [:alerting, @policy, @condition] do |f|
+  .row
+    .col-sm-3
+      .form-group
+        = f.label :layer, 'Layer'
+        = f.select :layer, Metric.layers, { prompt: true }, class: 'form-control'
+    .col-sm-3
+      .form-group
+        = f.label :name, 'Name'
+        = f.select :name, Metric.names, { prompt: true }, class: 'form-control'
+    .col-sm-3
+      .form-group
+        = f.label :inverted, 'Limit direction'
+        = f.select :inverted, [['over', false], ['below', true]], {}, class: 'form-control'
+    .col-sm-3
+      .form-group
+        = f.label :value, 'Value'
+        = f.number_field :value, class: 'form-control'
+
+  .row
+    .col-sm-3
+     .form-group
+      = f.hidden_field :type, value: params[:type]
+      = f.submit class: 'btn btn-primary btn-block'

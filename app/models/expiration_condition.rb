@@ -1,0 +1,2 @@
+class ExpirationCondition < Condition
+end

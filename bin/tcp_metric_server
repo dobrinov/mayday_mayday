@@ -3,6 +3,6 @@ require 'active_record'
 require_relative '../lib/tcp_metric_server'
 
 RAILS_ENV = ENV['RAILS_ENV'] || 'development'
-ActiveRecord::Base.establish_connection(YAML.load_file('config/database.yml')[RAILS_ENV])
+ActiveRecord::Base.establish_connection(YAML.load_file('../config/database.yml')[RAILS_ENV])
 
 TcpMetricServer.new(6666).start

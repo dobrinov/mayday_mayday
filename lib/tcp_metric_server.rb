@@ -7,7 +7,7 @@ require_relative '../app/models/measurement'
 
 class TcpMetricServer
 
-  BULK_IMPORT_PACKAGE_SIZE = 300
+  BULK_IMPORT_PACKAGE_SIZE = 1
 
   def initialize(port)
     @server = TCPServer.new(port)

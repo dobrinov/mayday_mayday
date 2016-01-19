@@ -1,0 +1,2 @@
+class ExistanceCondition < Condition
+end
